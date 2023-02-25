@@ -30,6 +30,10 @@ public abstract class PlayerAction {
         return actionType;
     }
 
+    public Unit getUnit() {
+        return unit;
+    }
+
     public void perform(Turn playerTurn, Board board) {
         System.out.println("Not implemented!");
     }
