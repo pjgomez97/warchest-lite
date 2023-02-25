@@ -1,8 +1,12 @@
 package org.warchest.unit;
 
+import org.warchest.round.PlayerAction;
+
+import java.util.List;
+
 public interface StandardUnit {
 
-    void attack(int x, int y);
+    boolean hasFreeAttack(List<PlayerAction> playerActions);
 
-    void move(int x, int y);
+    boolean hasFreeMove(List<PlayerAction> playerActions);
 }

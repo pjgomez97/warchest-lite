@@ -3,6 +3,7 @@ package org.warchest;
 import org.warchest.board.Board;
 import org.warchest.player.Player;
 import org.warchest.player.PlayerName;
+import org.warchest.round.RoundInfo;
 import org.warchest.unit.Archer;
 import org.warchest.unit.Berserker;
 import org.warchest.unit.Cavalry;
@@ -17,6 +18,7 @@ import org.warchest.unit.Unit;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Game {
@@ -24,14 +26,14 @@ public class Game {
     private static final int UNIT_TYPES_PER_PLAYER = 4;
 
     private final List<List<Unit>> units = new ArrayList<>(List.of(
-            new LinkedList<>(List.of(new Archer(),      new Archer(),       new Archer(),       new Archer())),
-            new LinkedList<>(List.of(new Berserker(),   new Berserker(),    new Berserker(),    new Berserker())),
-            new LinkedList<>(List.of(new Cavalry(),     new Cavalry(),      new Cavalry(),      new Cavalry())),
-            new LinkedList<>(List.of(new Crossbowman(), new Crossbowman(),  new Crossbowman(),  new Crossbowman(),  new Crossbowman())),
-            new LinkedList<>(List.of(new Knight(),      new Knight(),       new Knight(),       new Knight(),       new Knight())),
-            new LinkedList<>(List.of(new Lancer(),      new Lancer(),       new Lancer(),       new Lancer())),
-            new LinkedList<>(List.of(new Mercenary(),   new Mercenary(),    new Mercenary(),    new Mercenary(),    new Mercenary())),
-            new LinkedList<>(List.of(new Swordsman(),   new Swordsman(),    new Swordsman(),    new Swordsman()))
+            new LinkedList<>(List.of(new Archer(), new Archer(), new Archer(), new Archer())),
+            new LinkedList<>(List.of(new Berserker(), new Berserker(), new Berserker(), new Berserker())),
+            new LinkedList<>(List.of(new Cavalry(), new Cavalry(), new Cavalry(), new Cavalry())),
+            new LinkedList<>(List.of(new Crossbowman(), new Crossbowman(), new Crossbowman(), new Crossbowman(), new Crossbowman())),
+            new LinkedList<>(List.of(new Knight(), new Knight(), new Knight(), new Knight(), new Knight())),
+            new LinkedList<>(List.of(new Lancer(), new Lancer(), new Lancer(), new Lancer())),
+            new LinkedList<>(List.of(new Mercenary(), new Mercenary(), new Mercenary(), new Mercenary(), new Mercenary())),
+            new LinkedList<>(List.of(new Swordsman(), new Swordsman(), new Swordsman(), new Swordsman()))
     ));
 
     private final Board board = new Board(new String[][]{
@@ -46,45 +48,42 @@ public class Game {
             {"-", "-", "W", "-", "-", "-", "W", "-", "-"}
     });
 
-    private Player[] players;
+    private Map<PlayerName, Player> players;
 
-    private int playerTurn;
+    private RoundInfo roundInfo = null;
 
     public Game() {
         initializePlayers();
-        initializePlayerTurn();
     }
 
     public void play() {
         System.out.println("Game start");
 
         while (true) {
-            nextTurn();
+            roundInfo = new RoundInfo(roundInfo);
 
             printSeparator();
 
             board.printBoard();
 
-            players[playerTurn].printCurrentStatus();
+            printPlayerCurrentStatus(roundInfo.getStartingPlayer());
 
-            if (hasPlayerWon(players[playerTurn])) {
+            if (hasPlayerWon(roundInfo.getStartingPlayer())) {
+                System.out.println("Player " + roundInfo.getStartingPlayer() + " has won the game");
                 break;
-            };
+            }
+
+            printSeparator();
+
+            board.printBoard();
+
+            printPlayerCurrentStatus(roundInfo.getFinishingPlayer());
+
+            if (hasPlayerWon(roundInfo.getFinishingPlayer())) {
+                System.out.println("Player " + roundInfo.getFinishingPlayer() + " has won the game");
+                break;
+            }
         }
-
-        System.out.println("Player " + players[playerTurn].getName() + " has won the game");
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public Player getPlayer(int position) {
-        return players[position];
-    }
-
-    private void initializePlayerTurn() {
-        playerTurn = new Random().nextInt(players.length);
     }
 
     private void initializePlayers() {
@@ -109,7 +108,10 @@ public class Game {
         firstPlayerBag.add(new Royal());
         secondPlayerBag.add(new Royal());
 
-        this.players = new Player[] {new Player(PlayerName.CROW, firstPlayerBag, firstPlayerRecruitment), new Player(PlayerName.WOLF, secondPlayerBag, secondPlayerRecruitment)};
+        Player firstPlayer = new Player(firstPlayerBag, firstPlayerRecruitment);
+        Player secondPlayer = new Player(secondPlayerBag, secondPlayerRecruitment);
+
+        this.players = Map.of(PlayerName.CROW, firstPlayer, PlayerName.WOLF, secondPlayer);
     }
 
     private void initializePlayerUnits(List<Unit> playerBag, List<Unit> playerRecruitment, int position) {
@@ -119,15 +121,22 @@ public class Game {
         playerRecruitment.addAll(units.remove(position));
     }
 
-    private void nextTurn() {
-        this.playerTurn = (playerTurn + 1) % players.length;
-    }
-
-    private boolean hasPlayerWon(Player player) {
-        return player.getRemainingTokens() == 0;
-    }
-
     private void printSeparator() {
         System.out.print("\n\n-----------------------------------------------------\n\n");
+    }
+
+    public void printPlayerCurrentStatus(PlayerName playerName) {
+        System.out.println();
+        System.out.printf("========== %s ==========%n", playerName);
+
+        Player player = this.players.get(playerName);
+
+        player.printHand();
+        player.printRecruitment();
+        player.printDiscard();
+    }
+
+    private boolean hasPlayerWon(PlayerName playerName) {
+        return this.players.get(playerName).getRemainingTokens() == 0;
     }
 }

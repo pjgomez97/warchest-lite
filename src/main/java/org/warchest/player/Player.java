@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 public class Player {
 
-    private final PlayerName name;
-
     private final List<Unit> bag;
 
     private final List<Unit> hand;
@@ -24,8 +22,7 @@ public class Player {
 
     private final List<Token> tokens = new LinkedList<>(List.of(new Token(this), new Token(this), new Token(this), new Token(this)));
 
-    public Player(PlayerName name, List<Unit> bag, List<Unit> recruitment) {
-        this.name = name;
+    public Player(List<Unit> bag, List<Unit> recruitment) {
         this.bag = bag;
         this.recruitment = recruitment;
         this.hand = new ArrayList<>();
@@ -33,23 +30,11 @@ public class Player {
         initializeHand();
     }
 
-    public PlayerName getName() {
-        return name;
-    }
-
     public int getRemainingTokens() {
         return this.tokens.size();
     }
 
-    public void printCurrentStatus() {
-        System.out.println();
-        System.out.printf("========== %s ==========%n", this.name);
-        printHand();
-        printRecruitment();
-        printDiscard();
-    }
-
-    private void printHand() {
+    public void printHand() {
         System.out.print("Hand: ");
 
         for (Unit unit: hand) {
@@ -59,7 +44,7 @@ public class Player {
         System.out.println();
     }
 
-    private void printRecruitment() {
+    public void printRecruitment() {
         System.out.print("Recruitment pieces: ");
 
         Map<UnitType, List<Unit>> recruitmentUnitsByType = this.recruitment.stream().collect(Collectors.groupingBy(Unit::getType));
@@ -71,7 +56,7 @@ public class Player {
         System.out.println();
     }
 
-    private void printDiscard() {
+    public void printDiscard() {
         System.out.print("Discard pile: ");
 
         for (Unit unit: discard) {
@@ -81,7 +66,7 @@ public class Player {
         System.out.println();
     }
 
-    private void initializeHand() {
+    public void initializeHand() {
         Random random = new Random();
 
         while (hand.size() < 3) {

@@ -5,6 +5,7 @@ public class Board {
     private static final String COLUMN_HEADERS =  "0 1 2 3 4 5 6 7 8";
 
     private static final String[] ROW_HEADERS = {"A", "B", "C", "D", "E", "F", "G", "H", "I" };
+
     private final Square[][] board;
 
     public Board(String[][] board) {

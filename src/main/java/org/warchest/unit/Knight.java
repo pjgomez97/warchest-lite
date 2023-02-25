@@ -1,5 +1,9 @@
 package org.warchest.unit;
 
+import org.warchest.round.PlayerAction;
+
+import java.util.List;
+
 public class Knight implements Unit, StandardUnit {
 
     private final UnitType type = UnitType.KNIGHT;
@@ -17,12 +21,12 @@ public class Knight implements Unit, StandardUnit {
     }
 
     @Override
-    public void attack(int x, int y) {
-
+    public boolean hasFreeAttack(List<PlayerAction> playerActions) {
+        return false;
     }
 
     @Override
-    public void move(int x, int y) {
-
+    public boolean hasFreeMove(List<PlayerAction> playerActions) {
+        return false;
     }
 }
