@@ -1,5 +1,6 @@
 package org.warchest.playerAction;
 
+import org.warchest.board.Board;
 import org.warchest.board.Square;
 import org.warchest.player.Player;
 import org.warchest.round.Turn;
@@ -12,7 +13,7 @@ public class ControlAction extends PlayerAction {
     }
 
     @Override
-    public void perform(Turn playerTurn) {
+    public void perform(Turn playerTurn, Board board) {
         playerTurn.decreaseMovesLeft();
         playerTurn.addPlayerAction(this);
     }

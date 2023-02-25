@@ -1,5 +1,6 @@
 package org.warchest.playerAction;
 
+import org.warchest.board.Board;
 import org.warchest.board.Square;
 import org.warchest.player.Player;
 import org.warchest.round.Turn;
@@ -29,7 +30,7 @@ public abstract class PlayerAction {
         return actionType;
     }
 
-    public void perform(Turn playerTurn) {
+    public void perform(Turn playerTurn, Board board) {
         System.out.println("Not implemented!");
     }
 }

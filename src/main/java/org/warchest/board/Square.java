@@ -5,13 +5,15 @@ import org.warchest.unit.StandardUnit;
 
 public class Square {
 
+    private Position position;
+
     private boolean isZone = false;
 
     private PlayerName controlledBy;
 
     private StandardUnit occupiedBy;
 
-    public static Square buildFromString(String s) {
+    public static Square buildFromString(String s, Position position) {
         Square square = new Square();
 
         switch (s) {
@@ -23,7 +25,17 @@ public class Square {
             default: break;
         }
 
+        square.setPosition(position);
+
         return square;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public PlayerName getControlledBy() {

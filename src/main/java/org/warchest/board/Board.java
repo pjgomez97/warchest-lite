@@ -3,6 +3,9 @@ package org.warchest.board;
 import org.warchest.player.Player;
 import org.warchest.unit.Unit;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
 
     private static final String COLUMN_HEADERS = "0 1 2 3 4 5 6 7 8";
@@ -50,6 +53,27 @@ public class Board {
         return board[row][column];
     }
 
+    public List<Square> getSquaresAdjacentTo(Square square) {
+        List<Square> adjacentSquares = new ArrayList<>();
+
+        int squareRow = square.getPosition().row();
+        int squareColumn = square.getPosition().column();
+
+        for (int row = squareRow - 1; row <= squareRow + 1; row++) {
+            if (row < 0 || row >= board.length) {
+                continue;
+            }
+            for (int column = squareColumn - 1; column <= squareColumn + 1; column++) {
+                if (column < 0 || column >= board[0].length) {
+                    continue;
+                }
+                adjacentSquares.add(board[row][column]);
+            }
+        }
+
+        return adjacentSquares;
+    }
+
     public int unitsPresentForPlayer(Player player) {
         int count = 0;
         for (Square[] squares : board) {
@@ -65,7 +89,7 @@ public class Board {
     private void initializeBoardFromStringBoard(String[][] board) {
         for (int row = 0; row < board.length; row++) {
             for (int column = 0; column < board[0].length; column++) {
-                this.board[row][column] = Square.buildFromString(board[row][column]);
+                this.board[row][column] = Square.buildFromString(board[row][column], new Position(row, column));
             }
         }
     }

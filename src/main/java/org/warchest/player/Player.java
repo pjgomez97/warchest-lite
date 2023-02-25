@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 public class Player {
 
+    private final PlayerName playerName;
+
     private final List<Unit> bag;
 
     private final List<Unit> hand;
@@ -22,13 +24,18 @@ public class Player {
 
     private final List<Token> tokens = new LinkedList<>(List.of(new Token(this), new Token(this), new Token(this), new Token(this)));
 
-    public Player(List<Unit> bag, List<Unit> recruitment) {
+    public Player(PlayerName playerName, List<Unit> bag, List<Unit> recruitment) {
+        this.playerName = playerName;
         this.bag = bag;
         this.recruitment = recruitment;
         this.hand = new ArrayList<>();
         this.discard = new ArrayList<>();
         setOwnership();
         initializeHand();
+    }
+
+    public PlayerName getPlayerName() {
+        return playerName;
     }
 
     public boolean hasEmptyBag() {
@@ -97,6 +104,10 @@ public class Player {
     }
 
     public Unit getUnitFromHandByType(UnitType unitType) {
-        return hand.stream().filter(unit -> unit.getType() == unitType).findFirst().get();
+        return hand.stream().filter(unit -> unit.getType() == unitType).findFirst().orElse(null);
+    }
+
+    public void removeUnitFromHand(Unit unit) {
+        hand.remove(unit);
     }
 }

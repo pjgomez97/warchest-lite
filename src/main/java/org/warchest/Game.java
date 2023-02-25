@@ -6,9 +6,23 @@ import org.warchest.player.Player;
 import org.warchest.player.PlayerName;
 import org.warchest.playerAction.*;
 import org.warchest.round.Round;
-import org.warchest.unit.*;
+import org.warchest.unit.Archer;
+import org.warchest.unit.Berserker;
+import org.warchest.unit.Cavalry;
+import org.warchest.unit.Crossbowman;
+import org.warchest.unit.Knight;
+import org.warchest.unit.Lancer;
+import org.warchest.unit.Mercenary;
+import org.warchest.unit.Royal;
+import org.warchest.unit.Swordsman;
+import org.warchest.unit.Unit;
+import org.warchest.unit.UnitType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
 
@@ -37,7 +51,7 @@ public class Game {
             {"-", "-", "W", "-", "-", "-", "W", "-", "-"}
     });
 
-    private Map<PlayerName, Player> players;
+    private Player[] players;
 
     private Round round = null;
 
@@ -70,7 +84,7 @@ public class Game {
                     }
                 }
 
-                playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()));
+                playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()), board);
 
                 if (playerAction.getActionType().equals(ActionType.ATTACK) || playerAction.getActionType().equals(ActionType.CONTROL)) {
                     if (hasPlayerWon(round.getStartingPlayer(), round.getFinishingPlayer())) {
@@ -99,7 +113,7 @@ public class Game {
                     }
                 }
 
-                playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()));
+                playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()), board);
 
                 if (playerAction.getActionType().equals(ActionType.ATTACK) || playerAction.getActionType().equals(ActionType.CONTROL)) {
                     if (hasPlayerWon(round.getFinishingPlayer(), round.getStartingPlayer())) {
@@ -133,10 +147,10 @@ public class Game {
         firstPlayerBag.add(new Royal());
         secondPlayerBag.add(new Royal());
 
-        Player firstPlayer = new Player(firstPlayerBag, firstPlayerRecruitment);
-        Player secondPlayer = new Player(secondPlayerBag, secondPlayerRecruitment);
+        Player firstPlayer = new Player(PlayerName.CROW, firstPlayerBag, firstPlayerRecruitment);
+        Player secondPlayer = new Player(PlayerName.WOLF, secondPlayerBag, secondPlayerRecruitment);
 
-        players = Map.of(PlayerName.CROW, firstPlayer, PlayerName.WOLF, secondPlayer);
+        players = new Player[] {firstPlayer, secondPlayer};
     }
 
     private void initializePlayerUnits(List<Unit> playerBag, List<Unit> playerRecruitment, int position) {
@@ -154,7 +168,7 @@ public class Game {
         System.out.println();
         System.out.printf("========== %s ==========%n", playerName);
 
-        Player player = players.get(playerName);
+        Player player = getPlayerByName(playerName);
 
         player.printHand();
         player.printRecruitment();
@@ -162,17 +176,21 @@ public class Game {
     }
 
     private boolean hasPlayerWon(PlayerName playerName, PlayerName adversaryName) {
-        if(players.get(playerName).getRemainingTokens() == 0) {
+        if(getPlayerByName(playerName).getRemainingTokens() == 0) {
             return true;
         }
 
-        Player adversary = players.get(adversaryName);
+        Player adversary = getPlayerByName(adversaryName);
 
         return adversary.hasNoUnitsToRecruit() && adversary.hasEmptyBag() && adversary.hasEmptyHand() && board.unitsPresentForPlayer(adversary) == 0;
     }
 
     private void showPlayerActions(int movesLeft) {
         System.out.printf("\nInput the desired action. You have %d moves left.\nEnter HELP for examples on the possible actions. \n\n", movesLeft);
+    }
+
+    private Player getPlayerByName(PlayerName playerName) {
+        return players[0].getPlayerName().equals(playerName) ? players[0] : players[1];
     }
 
     private PlayerAction getInputFromPlayer(PlayerName playerName) throws InvalidCommandException {
@@ -200,7 +218,7 @@ public class Game {
     }
 
     private PlayerAction parseAction(String action, PlayerName playerName) throws InvalidCommandException {
-        Player player = players.get(playerName);
+        Player player = getPlayerByName(playerName);
         String[] tokens = action.split(" ");
         try {
             switch (tokens[0]) {
