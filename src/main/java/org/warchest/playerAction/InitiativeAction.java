@@ -19,7 +19,7 @@ public class InitiativeAction extends PlayerAction {
             return;
         }
 
-        player.removeUnitFromHand(unit);
+        player.discardUnitFromHand(unit);
         playerTurn.decreaseMovesLeft();
         playerTurn.addPlayerAction(this);
     }

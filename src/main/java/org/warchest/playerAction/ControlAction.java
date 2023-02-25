@@ -40,7 +40,7 @@ public class ControlAction extends PlayerAction {
         }
 
         destination.setControlledBy(player.getPlayerName());
-        player.removeUnitFromHand(unit);
+        player.discardUnitFromHand(unit);
 
         playerTurn.decreaseMovesLeft();
         playerTurn.addPlayerAction(this);

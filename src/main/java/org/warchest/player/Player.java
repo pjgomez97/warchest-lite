@@ -108,11 +108,15 @@ public class Player {
 
     public void removeUnitFromHand(Unit unit) {
         hand.remove(unit);
+    }
+
+    public void discardUnitFromHand(Unit unit) {
+        hand.remove(unit);
         discard.add(unit);
     }
 
     public void recruitUnit(Unit handUnit, Unit recruitmentUnit) {
-        removeUnitFromHand(handUnit);
+        discardUnitFromHand(handUnit);
         recruitment.remove(recruitmentUnit);
         bag.add(recruitmentUnit);
     }
