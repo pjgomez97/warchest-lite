@@ -21,6 +21,8 @@ import java.util.Random;
 
 public class Game {
 
+    private static final int UNIT_TYPES_PER_PLAYER = 4;
+
     private final List<List<Unit>> units = new ArrayList<>(List.of(
             new LinkedList<>(List.of(new Archer(),      new Archer(),       new Archer(),       new Archer())),
             new LinkedList<>(List.of(new Berserker(),   new Berserker(),    new Berserker(),    new Berserker())),
@@ -49,8 +51,8 @@ public class Game {
     private int playerTurn;
 
     public Game() {
-        initializePlayerTurn();
         initializePlayers();
+        initializePlayerTurn();
     }
 
     public void play() {
@@ -82,7 +84,7 @@ public class Game {
     }
 
     private void initializePlayerTurn() {
-        playerTurn = new Random().nextInt(2);
+        playerTurn = new Random().nextInt(players.length);
     }
 
     private void initializePlayers() {
@@ -94,7 +96,7 @@ public class Game {
         List<Unit> secondPlayerBag = new ArrayList<>();
         List<Unit> secondPlayerRecruitment = new ArrayList<>();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < UNIT_TYPES_PER_PLAYER; i++) {
             int position = random.nextInt(units.size());
 
             initializePlayerUnits(firstPlayerBag, firstPlayerRecruitment, position);
