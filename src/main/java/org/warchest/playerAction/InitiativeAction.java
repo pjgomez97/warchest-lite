@@ -14,6 +14,12 @@ public class InitiativeAction extends PlayerAction {
 
     @Override
     public void perform(Turn playerTurn, Board board) {
+        if (unit == null) {
+            System.out.println("Error. There are no units of the requested type in your hand");
+            return;
+        }
+
+        player.removeUnitFromHand(unit);
         playerTurn.decreaseMovesLeft();
         playerTurn.addPlayerAction(this);
     }
