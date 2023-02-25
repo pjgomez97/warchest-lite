@@ -8,16 +8,9 @@ public class Lancer implements Unit, StandardUnit {
 
     private final UnitType type = UnitType.LANCER;
 
-    private final int totalUnits = 4;
-
     @Override
     public UnitType getType() {
         return type;
-    }
-
-    @Override
-    public int getTotalUnits() {
-        return totalUnits;
     }
 
     @Override
