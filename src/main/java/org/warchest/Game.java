@@ -120,11 +120,7 @@ public class Game {
     }
 
     private void nextTurn() {
-        if (playerTurn == 0) {
-            this.playerTurn = 1;
-        } else {
-            this.playerTurn = 0;
-        }
+        this.playerTurn = (playerTurn + 1) % players.length;
     }
 
     private boolean hasPlayerWon(Player player) {
