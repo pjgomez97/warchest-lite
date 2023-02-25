@@ -31,7 +31,6 @@ public class Player {
         this.hand = new ArrayList<>();
         this.discard = new ArrayList<>();
         setOwnership();
-        initializeHand();
     }
 
     public PlayerName getPlayerName() {
@@ -109,5 +108,6 @@ public class Player {
 
     public void removeUnitFromHand(Unit unit) {
         hand.remove(unit);
+        discard.add(unit);
     }
 }

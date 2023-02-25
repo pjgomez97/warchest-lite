@@ -2,6 +2,7 @@ package org.warchest.board;
 
 import org.warchest.player.PlayerName;
 import org.warchest.unit.StandardUnit;
+import org.warchest.unit.Unit;
 
 public class Square {
 
@@ -63,7 +64,7 @@ public class Square {
         } else if (isZone) {
             return "@";
         } else if (occupiedBy != null) {
-            return occupiedBy.toString().substring(0, 2).toUpperCase();
+            return ((Unit) occupiedBy).getType().toString().substring(0, 2).toUpperCase();
         } else {
             return "-";
         }

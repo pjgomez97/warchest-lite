@@ -65,6 +65,10 @@ public class Game {
         while (true) {
             round = new Round(round);
 
+            for (Player player: players) {
+                player.initializeHand();
+            }
+
             while (round.getPlayerTurnByName(round.getStartingPlayer()).getMovesLeft() > 0) {
                 printSeparator();
 
