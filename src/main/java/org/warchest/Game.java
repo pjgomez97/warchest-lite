@@ -111,7 +111,7 @@ public class Game {
         Player firstPlayer = new Player(firstPlayerBag, firstPlayerRecruitment);
         Player secondPlayer = new Player(secondPlayerBag, secondPlayerRecruitment);
 
-        this.players = Map.of(PlayerName.CROW, firstPlayer, PlayerName.WOLF, secondPlayer);
+        players = Map.of(PlayerName.CROW, firstPlayer, PlayerName.WOLF, secondPlayer);
     }
 
     private void initializePlayerUnits(List<Unit> playerBag, List<Unit> playerRecruitment, int position) {
@@ -129,7 +129,7 @@ public class Game {
         System.out.println();
         System.out.printf("========== %s ==========%n", playerName);
 
-        Player player = this.players.get(playerName);
+        Player player = players.get(playerName);
 
         player.printHand();
         player.printRecruitment();
@@ -137,6 +137,6 @@ public class Game {
     }
 
     private boolean hasPlayerWon(PlayerName playerName) {
-        return this.players.get(playerName).getRemainingTokens() == 0;
+        return players.get(playerName).getRemainingTokens() == 0;
     }
 }

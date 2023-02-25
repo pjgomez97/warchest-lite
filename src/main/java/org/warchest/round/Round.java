@@ -20,29 +20,29 @@ public class Round {
             randomTurns();
         } else {
             if (round.getPlayerTurnByName(round.getFinishingPlayer()).getPlayerActions().stream().anyMatch(playerAction -> playerAction.action() == Action.INITIATIVE)) {
-                this.firstPlayerName = round.getFinishingPlayer();
-                this.secondPlayerName = round.getStartingPlayer();
+                firstPlayerName = round.getFinishingPlayer();
+                secondPlayerName = round.getStartingPlayer();
             } else if (round.getPlayerTurnByName(round.getStartingPlayer()).getPlayerActions().stream().anyMatch(playerAction -> playerAction.action() == Action.INITIATIVE)) {
-                this.firstPlayerName = round.getStartingPlayer();
-                this.secondPlayerName = round.getFinishingPlayer();
+                firstPlayerName = round.getStartingPlayer();
+                secondPlayerName = round.getFinishingPlayer();
             } else {
                 randomTurns();
             }
         }
-        this.turnMap.put(this.firstPlayerName, new Turn());
-        this.turnMap.put(this.secondPlayerName, new Turn());
+        turnMap.put(firstPlayerName, new Turn());
+        turnMap.put(secondPlayerName, new Turn());
     }
 
     public Turn getPlayerTurnByName(PlayerName playerName) {
-        return this.turnMap.get(playerName);
+        return turnMap.get(playerName);
     }
 
     public PlayerName getStartingPlayer() {
-        return this.firstPlayerName;
+        return firstPlayerName;
     }
 
     public PlayerName getFinishingPlayer() {
-        return this.secondPlayerName;
+        return secondPlayerName;
     }
 
     private void randomTurns() {
@@ -50,7 +50,7 @@ public class Round {
 
         int initialPlayer = random.nextInt(2);
 
-        this.firstPlayerName = PlayerName.values()[initialPlayer];
-        this.secondPlayerName = PlayerName.values()[(initialPlayer + 1) % 2];
+        firstPlayerName = PlayerName.values()[initialPlayer];
+        secondPlayerName = PlayerName.values()[(initialPlayer + 1) % 2];
     }
 }

@@ -16,18 +16,18 @@ public class Turn {
     }
 
     public List<PlayerAction> getPlayerActions() {
-        return this.playerActions;
+        return playerActions;
     }
 
     public void addPlayerAction(PlayerAction playerAction) {
-        this.playerActions.add(playerAction);
+        playerActions.add(playerAction);
     }
 
     public int getMovesLeft() {
-        return this.movesLeft;
+        return movesLeft;
     }
 
     public void decreaseMovesLeft() {
-        this.movesLeft--;
+        movesLeft--;
     }
 }

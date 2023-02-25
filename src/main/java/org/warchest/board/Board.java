@@ -20,7 +20,7 @@ public class Board {
         for (int i = 0; i < board.length; i++) {
             System.out.print(ROW_HEADERS[i] + "| ");
             for (int j = 0; j < board[0].length; j++) {
-                System.out.print(this.board[i][j].toString() + " ");
+                System.out.print(board[i][j].toString() + " ");
             }
             System.out.println();
         }

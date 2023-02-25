@@ -31,7 +31,7 @@ public class Player {
     }
 
     public int getRemainingTokens() {
-        return this.tokens.size();
+        return tokens.size();
     }
 
     public void printHand() {
@@ -47,7 +47,7 @@ public class Player {
     public void printRecruitment() {
         System.out.print("Recruitment pieces: ");
 
-        Map<UnitType, List<Unit>> recruitmentUnitsByType = this.recruitment.stream().collect(Collectors.groupingBy(Unit::getType));
+        Map<UnitType, List<Unit>> recruitmentUnitsByType = recruitment.stream().collect(Collectors.groupingBy(Unit::getType));
 
         for (Map.Entry<UnitType, List<Unit>> entry : recruitmentUnitsByType.entrySet()) {
             System.out.print(entry.getKey() + " = " + entry.getValue().size() + ", ");
