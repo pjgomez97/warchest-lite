@@ -1,6 +1,6 @@
 package org.warchest.unit;
 
-import org.warchest.round.PlayerAction;
+import org.warchest.playerAction.PlayerAction;
 
 import java.util.List;
 

@@ -1,25 +1,14 @@
 package org.warchest;
 
 import org.warchest.board.Board;
+import org.warchest.exception.InvalidCommandException;
 import org.warchest.player.Player;
 import org.warchest.player.PlayerName;
+import org.warchest.playerAction.*;
 import org.warchest.round.Round;
-import org.warchest.unit.Archer;
-import org.warchest.unit.Berserker;
-import org.warchest.unit.Cavalry;
-import org.warchest.unit.Crossbowman;
-import org.warchest.unit.Knight;
-import org.warchest.unit.Lancer;
-import org.warchest.unit.Mercenary;
-import org.warchest.unit.Royal;
-import org.warchest.unit.Swordsman;
-import org.warchest.unit.Unit;
+import org.warchest.unit.*;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Game {
 
@@ -62,26 +51,58 @@ public class Game {
         while (true) {
             round = new Round(round);
 
-            printSeparator();
+            while (round.getPlayerTurnByName(round.getStartingPlayer()).getMovesLeft() > 0) {
+                printSeparator();
 
-            board.printBoard();
+                board.printBoard();
 
-            printPlayerCurrentStatus(round.getStartingPlayer());
+                printPlayerCurrentStatus(round.getStartingPlayer());
 
-            if (hasPlayerWon(round.getStartingPlayer())) {
-                System.out.println("Player " + round.getStartingPlayer() + " has won the game");
-                break;
+                PlayerAction playerAction = null;
+
+                showPlayerActions(round.getPlayerTurnByName(round.getStartingPlayer()).getMovesLeft());
+
+                while (playerAction == null) {
+                    try {
+                        playerAction = getInputFromPlayer(round.getStartingPlayer());
+                    } catch (InvalidCommandException e) {
+                        System.out.println("Invalid command syntax. Please try again.");
+                    }
+                }
+
+                playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()));
+
+                if (hasPlayerWon(round.getStartingPlayer())) {
+                    System.out.println("Player " + round.getStartingPlayer() + " has won the game");
+                    break;
+                }
             }
 
-            printSeparator();
+            while (round.getPlayerTurnByName(round.getFinishingPlayer()).getMovesLeft() > 0) {
+                printSeparator();
 
-            board.printBoard();
+                board.printBoard();
 
-            printPlayerCurrentStatus(round.getFinishingPlayer());
+                printPlayerCurrentStatus(round.getFinishingPlayer());
 
-            if (hasPlayerWon(round.getFinishingPlayer())) {
-                System.out.println("Player " + round.getFinishingPlayer() + " has won the game");
-                break;
+                PlayerAction playerAction = null;
+
+                showPlayerActions(round.getPlayerTurnByName(round.getFinishingPlayer()).getMovesLeft());
+
+                while (playerAction == null) {
+                    try {
+                        playerAction = getInputFromPlayer(round.getFinishingPlayer());
+                    } catch (InvalidCommandException e) {
+                        System.out.println("Invalid command syntax. Please try again.");
+                    }
+                }
+
+                playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()));
+
+                if (hasPlayerWon(round.getFinishingPlayer())) {
+                    System.out.println("Player " + round.getFinishingPlayer() + " has won the game");
+                    break;
+                }
             }
         }
     }
@@ -138,5 +159,71 @@ public class Game {
 
     private boolean hasPlayerWon(PlayerName playerName) {
         return players.get(playerName).getRemainingTokens() == 0;
+    }
+
+    private void showPlayerActions(int movesLeft) {
+        System.out.printf("\nInput the desired action. You have %d moves left.\nEnter HELP for examples on the possible actions. \n\n", movesLeft);
+    }
+
+    private PlayerAction getInputFromPlayer(PlayerName playerName) throws InvalidCommandException {
+        System.out.print("ACTION: ");
+        Scanner scanner = new Scanner(System.in);
+        String action = scanner.nextLine();
+        if (action.equals("HELP")) {
+            showActionExamples();
+            return null;
+        } else {
+            return parseAction(action, playerName);
+        }
+    }
+
+    private void showActionExamples() {
+        System.out.println("\n----- AVAILABLE COMMANDS -----");
+        System.out.println("PLACE <UNIT> <SQUARE>");
+        System.out.println("CONTROL <UNIT> <SQUARE>");
+        System.out.println("MOVE <ORIGIN> <DESTINATION>");
+        System.out.println("RECRUIT <UNIT>");
+        System.out.println("ATTACK <ORIGIN> <DESTINATION>");
+        System.out.println("INITIATIVE <UNIT>");
+        System.out.println("EXIT");
+        System.out.println("\nThe board positions must be input like ROW:COLUMN. E.g: A:1, C:3\n");
+    }
+
+    private PlayerAction parseAction(String action, PlayerName playerName) throws InvalidCommandException {
+        Player player = players.get(playerName);
+        String[] tokens = action.split(" ");
+        try {
+            switch (tokens[0]) {
+                case "PLACE" -> {
+                    return new PlaceAction(player, ActionType.PLACE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), null, board.getSquareFromPlayerInput(tokens[2]));
+                }
+                case "CONTROL" -> {
+                    return new ControlAction(player, ActionType.CONTROL, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), null, board.getSquareFromPlayerInput(tokens[2]));
+                }
+                case "MOVE" -> {
+                    return new MoveAction(player, ActionType.MOVE, null, board.getSquareFromPlayerInput(tokens[1]), board.getSquareFromPlayerInput(tokens[2]));
+                }
+                case "RECRUIT" -> {
+                    return new RecruitAction(player, ActionType.RECRUIT, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), null, null);
+                }
+                case "ATTACK" -> {
+                    return new AttackAction(player, ActionType.ATTACK, null, board.getSquareFromPlayerInput(tokens[1]), board.getSquareFromPlayerInput(tokens[2]));
+                }
+                case "INITIATIVE" -> {
+                    return new InitiativeAction(player, ActionType.INITIATIVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), null, null);
+                }
+                case "EXIT" -> {
+                    System.out.println("Exiting the game...");
+                    System.exit(0);
+                    return null;
+                }
+                default -> {
+                    System.out.println("Invalid command syntax. Please try again");
+                    return null;
+                }
+            }
+        } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
+            throw new InvalidCommandException("The introduced command is not valid");
+        }
     }
 }

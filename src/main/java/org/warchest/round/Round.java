@@ -1,6 +1,7 @@
 package org.warchest.round;
 
 import org.warchest.player.PlayerName;
+import org.warchest.playerAction.ActionType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,10 +20,10 @@ public class Round {
         if (round == null) {
             randomTurns();
         } else {
-            if (round.getPlayerTurnByName(round.getFinishingPlayer()).getPlayerActions().stream().anyMatch(playerAction -> playerAction.action() == Action.INITIATIVE)) {
+            if (round.getPlayerTurnByName(round.getFinishingPlayer()).getPlayerActions().stream().anyMatch(playerAction -> playerAction.getActionType() == ActionType.INITIATIVE)) {
                 firstPlayerName = round.getFinishingPlayer();
                 secondPlayerName = round.getStartingPlayer();
-            } else if (round.getPlayerTurnByName(round.getStartingPlayer()).getPlayerActions().stream().anyMatch(playerAction -> playerAction.action() == Action.INITIATIVE)) {
+            } else if (round.getPlayerTurnByName(round.getStartingPlayer()).getPlayerActions().stream().anyMatch(playerAction -> playerAction.getActionType() == ActionType.INITIATIVE)) {
                 firstPlayerName = round.getStartingPlayer();
                 secondPlayerName = round.getFinishingPlayer();
             } else {

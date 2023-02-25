@@ -1,6 +1,6 @@
-package org.warchest.round;
+package org.warchest.playerAction;
 
-public enum Action {
+public enum ActionType {
     PLACE,
     CONTROL,
     MOVE,

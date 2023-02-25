@@ -73,4 +73,8 @@ public class Player {
             hand.add(bag.remove(random.nextInt(bag.size())));
         }
     }
+
+    public Unit getUnitFromHandByType(UnitType unitType) {
+        return hand.stream().filter(unit -> unit.getType() == unitType).findFirst().get();
+    }
 }

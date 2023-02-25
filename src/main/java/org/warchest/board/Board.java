@@ -17,20 +17,40 @@ public class Board {
         System.out.print("\n---- Current board state ----\n\n");
         System.out.println("   " + COLUMN_HEADERS);
         System.out.println("   -----------------");
-        for (int i = 0; i < board.length; i++) {
-            System.out.print(ROW_HEADERS[i] + "| ");
-            for (int j = 0; j < board[0].length; j++) {
-                System.out.print(board[i][j].toString() + " ");
+        for (int row = 0; row < board.length; row++) {
+            System.out.print(ROW_HEADERS[row] + "| ");
+            for (int column = 0; column < board[0].length; column++) {
+                System.out.print(board[row][column].toString() + " ");
             }
             System.out.println();
         }
         System.out.println();
     }
 
+    public Square getSquareFromPlayerInput(String playerInput) {
+        String[] coordinates = playerInput.split(":");
+        int row = -1;
+        int column = Integer.parseInt(coordinates[1]);
+
+        switch (coordinates[0]) {
+            case "A" -> row = 0;
+            case "B" -> row = 1;
+            case "C" -> row = 2;
+            case "D" -> row = 3;
+            case "E" -> row = 4;
+            case "F" -> row = 5;
+            case "G" -> row = 6;
+            case "H" -> row = 7;
+            case "I" -> row = 8;
+        }
+
+        return board[row][column];
+    }
+
     private void initializeBoardFromStringBoard(String[][] board) {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                this.board[i][j] = Square.buildFromString(board[i][j]);
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board[0].length; column++) {
+                this.board[row][column] = Square.buildFromString(board[row][column]);
             }
         }
     }

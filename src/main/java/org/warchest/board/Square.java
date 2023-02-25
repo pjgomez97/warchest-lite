@@ -1,7 +1,7 @@
 package org.warchest.board;
 
 import org.warchest.player.PlayerName;
-import org.warchest.unit.Unit;
+import org.warchest.unit.StandardUnit;
 
 public class Square {
 
@@ -9,7 +9,7 @@ public class Square {
 
     private PlayerName controlledBy;
 
-    private Unit occupiedBy;
+    private StandardUnit occupiedBy;
 
     public static Square buildFromString(String s) {
         Square square = new Square();
@@ -34,11 +34,11 @@ public class Square {
         this.controlledBy = controlledBy;
     }
 
-    public Unit getOccupiedBy() {
+    public StandardUnit getOccupiedBy() {
         return occupiedBy;
     }
 
-    public void setOccupiedBy(Unit occupiedBy) {
+    public void setOccupiedBy(StandardUnit occupiedBy) {
         this.occupiedBy = occupiedBy;
     }
 
