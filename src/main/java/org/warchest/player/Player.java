@@ -110,4 +110,14 @@ public class Player {
         hand.remove(unit);
         discard.add(unit);
     }
+
+    public void recruitUnit(Unit handUnit, Unit recruitmentUnit) {
+        removeUnitFromHand(handUnit);
+        recruitment.remove(recruitmentUnit);
+        bag.add(recruitmentUnit);
+    }
+
+    public Unit getUnitFromRecruitmentByType(UnitType unitType) {
+        return recruitment.stream().filter(unit -> unit.getType() == unitType).findFirst().orElse(null);
+    }
 }
