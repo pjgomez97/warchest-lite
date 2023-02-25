@@ -3,7 +3,7 @@ package org.warchest;
 import org.warchest.board.Board;
 import org.warchest.player.Player;
 import org.warchest.player.PlayerName;
-import org.warchest.round.RoundInfo;
+import org.warchest.round.Round;
 import org.warchest.unit.Archer;
 import org.warchest.unit.Berserker;
 import org.warchest.unit.Cavalry;
@@ -50,7 +50,7 @@ public class Game {
 
     private Map<PlayerName, Player> players;
 
-    private RoundInfo roundInfo = null;
+    private Round round = null;
 
     public Game() {
         initializePlayers();
@@ -60,16 +60,16 @@ public class Game {
         System.out.println("Game start");
 
         while (true) {
-            roundInfo = new RoundInfo(roundInfo);
+            round = new Round(round);
 
             printSeparator();
 
             board.printBoard();
 
-            printPlayerCurrentStatus(roundInfo.getStartingPlayer());
+            printPlayerCurrentStatus(round.getStartingPlayer());
 
-            if (hasPlayerWon(roundInfo.getStartingPlayer())) {
-                System.out.println("Player " + roundInfo.getStartingPlayer() + " has won the game");
+            if (hasPlayerWon(round.getStartingPlayer())) {
+                System.out.println("Player " + round.getStartingPlayer() + " has won the game");
                 break;
             }
 
@@ -77,10 +77,10 @@ public class Game {
 
             board.printBoard();
 
-            printPlayerCurrentStatus(roundInfo.getFinishingPlayer());
+            printPlayerCurrentStatus(round.getFinishingPlayer());
 
-            if (hasPlayerWon(roundInfo.getFinishingPlayer())) {
-                System.out.println("Player " + roundInfo.getFinishingPlayer() + " has won the game");
+            if (hasPlayerWon(round.getFinishingPlayer())) {
+                System.out.println("Player " + round.getFinishingPlayer() + " has won the game");
                 break;
             }
         }
