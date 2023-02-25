@@ -3,6 +3,7 @@ package org.warchest.board;
 import org.warchest.player.PlayerName;
 import org.warchest.unit.StandardUnit;
 import org.warchest.unit.Unit;
+import org.warchest.util.Console;
 
 public class Square {
 
@@ -39,6 +40,10 @@ public class Square {
         this.position = position;
     }
 
+    public boolean isZone() {
+        return isZone;
+    }
+
     public PlayerName getControlledBy() {
         return controlledBy;
     }
@@ -58,13 +63,19 @@ public class Square {
     @Override
     public String toString() {
         if (controlledBy == PlayerName.CROW) {
-            return "C";
+            return Console.printRed("C");
         } else if (controlledBy == PlayerName.WOLF) {
-            return "W";
-        } else if (isZone) {
-            return "@";
+            return Console.printBlue("W");
         } else if (occupiedBy != null) {
-            return ((Unit) occupiedBy).getType().toString().substring(0, 2).toUpperCase();
+            Unit unit = (Unit) occupiedBy;
+            String unitName = unit.getType().toString().substring(0, 2).toUpperCase();
+            if (!isZone) {
+                return unit.getOwner().getPlayerName() == PlayerName.CROW ? Console.printRed(unitName) : Console.printBlue(unitName);
+            } else {
+                return unit.getOwner().getPlayerName() == PlayerName.CROW ? Console.printYellow(unitName) : Console.printPurple(unitName);
+            }
+        } else if (isZone) {
+            return Console.printGreen("@");
         } else {
             return "-";
         }
