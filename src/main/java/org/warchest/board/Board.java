@@ -13,6 +13,7 @@ public class Board {
     }
 
     public void printBoard() {
+        System.out.print("\n---- Current board state ----\n\n");
         System.out.println("   " + COLUMN_HEADERS);
         System.out.println("   -----------------");
         for (int i = 0; i < board.length; i++) {
@@ -22,6 +23,7 @@ public class Board {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     private void initializeBoardFromStringBoard(String[][] board) {

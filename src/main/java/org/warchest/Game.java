@@ -61,9 +61,9 @@ public class Game {
         while (true) {
             nextTurn();
 
-            board.printBoard();
+            printSeparator();
 
-            System.out.println("Turn of player " + players[playerTurn].getName());
+            board.printBoard();
 
             players[playerTurn].printCurrentStatus();
 
@@ -127,4 +127,7 @@ public class Game {
         return player.getRemainingTokens() == 0;
     }
 
+    private void printSeparator() {
+        System.out.print("\n\n-----------------------------------------------------\n\n");
+    }
 }

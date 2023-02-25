@@ -42,6 +42,7 @@ public class Player {
     }
 
     public void printCurrentStatus() {
+        System.out.println();
         System.out.printf("========== %s ==========%n", this.name);
         printHand();
         printRecruitment();
