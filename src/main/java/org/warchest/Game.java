@@ -72,9 +72,11 @@ public class Game {
 
                 playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()));
 
-                if (hasPlayerWon(round.getStartingPlayer())) {
-                    System.out.println("Player " + round.getStartingPlayer() + " has won the game");
-                    break;
+                if (playerAction.getActionType().equals(ActionType.ATTACK) || playerAction.getActionType().equals(ActionType.CONTROL)) {
+                    if (hasPlayerWon(round.getStartingPlayer(), round.getFinishingPlayer())) {
+                        System.out.println("Player " + round.getStartingPlayer() + " has won the game");
+                        break;
+                    }
                 }
             }
 
@@ -99,9 +101,11 @@ public class Game {
 
                 playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()));
 
-                if (hasPlayerWon(round.getFinishingPlayer())) {
-                    System.out.println("Player " + round.getFinishingPlayer() + " has won the game");
-                    break;
+                if (playerAction.getActionType().equals(ActionType.ATTACK) || playerAction.getActionType().equals(ActionType.CONTROL)) {
+                    if (hasPlayerWon(round.getFinishingPlayer(), round.getStartingPlayer())) {
+                        System.out.println("Player " + round.getFinishingPlayer() + " has won the game");
+                        break;
+                    }
                 }
             }
         }
@@ -157,8 +161,14 @@ public class Game {
         player.printDiscard();
     }
 
-    private boolean hasPlayerWon(PlayerName playerName) {
-        return players.get(playerName).getRemainingTokens() == 0;
+    private boolean hasPlayerWon(PlayerName playerName, PlayerName adversaryName) {
+        if(players.get(playerName).getRemainingTokens() == 0) {
+            return true;
+        }
+
+        Player adversary = players.get(adversaryName);
+
+        return adversary.hasNoUnitsToRecruit() && adversary.hasEmptyBag() && adversary.hasEmptyHand() && board.unitsPresentForPlayer(adversary) == 0;
     }
 
     private void showPlayerActions(int movesLeft) {

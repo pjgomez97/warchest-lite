@@ -1,10 +1,13 @@
 package org.warchest.board;
 
+import org.warchest.player.Player;
+import org.warchest.unit.Unit;
+
 public class Board {
 
-    private static final String COLUMN_HEADERS =  "0 1 2 3 4 5 6 7 8";
+    private static final String COLUMN_HEADERS = "0 1 2 3 4 5 6 7 8";
 
-    private static final String[] ROW_HEADERS = {"A", "B", "C", "D", "E", "F", "G", "H", "I" };
+    private static final String[] ROW_HEADERS = {"A", "B", "C", "D", "E", "F", "G", "H", "I"};
 
     private final Square[][] board;
 
@@ -45,6 +48,18 @@ public class Board {
         }
 
         return board[row][column];
+    }
+
+    public int unitsPresentForPlayer(Player player) {
+        int count = 0;
+        for (Square[] squares : board) {
+            for (Square square : squares) {
+                if (square.getOccupiedBy() != null && ((Unit) square.getOccupiedBy()).getOwner() == player) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     private void initializeBoardFromStringBoard(String[][] board) {

@@ -27,7 +27,20 @@ public class Player {
         this.recruitment = recruitment;
         this.hand = new ArrayList<>();
         this.discard = new ArrayList<>();
+        setOwnership();
         initializeHand();
+    }
+
+    public boolean hasEmptyBag() {
+        return bag.isEmpty();
+    }
+
+    public boolean hasEmptyHand() {
+        return hand.isEmpty();
+    }
+
+    public boolean hasNoUnitsToRecruit() {
+        return recruitment.isEmpty();
     }
 
     public int getRemainingTokens() {
@@ -64,6 +77,15 @@ public class Player {
         }
 
         System.out.println();
+    }
+
+    public void setOwnership() {
+        for (Unit unit: bag) {
+            unit.setOwner(this);
+        }
+        for (Unit unit: recruitment) {
+            unit.setOwner(this);
+        }
     }
 
     public void initializeHand() {
