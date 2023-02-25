@@ -1,9 +1,7 @@
 package org.warchest.board;
 
 import org.warchest.player.PlayerName;
-import org.warchest.unit.UnitType;
-
-import java.util.Arrays;
+import org.warchest.unit.Unit;
 
 public class Square {
 
@@ -11,7 +9,7 @@ public class Square {
 
     private PlayerName controlledBy;
 
-    private UnitType occupiedBy;
+    private Unit occupiedBy;
 
     public static Square buildFromString(String s) {
         Square square = new Square();
@@ -22,11 +20,26 @@ public class Square {
             case "W": square.controlledBy = PlayerName.WOLF;
             break;
             case "@": square.isZone = true;
-            case "-": break;
-            default: square.occupiedBy = Arrays.stream(UnitType.values()).filter(unitType -> unitType.toString().startsWith(s)).findFirst().get();
+            default: break;
         }
 
         return square;
+    }
+
+    public PlayerName getControlledBy() {
+        return controlledBy;
+    }
+
+    public void setControlledBy(PlayerName controlledBy) {
+        this.controlledBy = controlledBy;
+    }
+
+    public Unit getOccupiedBy() {
+        return occupiedBy;
+    }
+
+    public void setOccupiedBy(Unit occupiedBy) {
+        this.occupiedBy = occupiedBy;
     }
 
     @Override

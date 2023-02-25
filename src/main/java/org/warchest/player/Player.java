@@ -84,10 +84,7 @@ public class Player {
         Random random = new Random();
 
         while (hand.size() < 3) {
-            Unit unit = bag.get(random.nextInt(bag.size()));
-
-            bag.remove(unit);
-            hand.add(unit);
+            hand.add(bag.remove(random.nextInt(bag.size())));
         }
     }
 }
