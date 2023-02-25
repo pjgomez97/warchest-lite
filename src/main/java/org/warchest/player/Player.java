@@ -4,7 +4,6 @@ import org.warchest.unit.Unit;
 import org.warchest.unit.UnitType;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -22,7 +21,7 @@ public class Player {
 
     private final List<Unit> discard;
 
-    private final List<Token> tokens = new LinkedList<>(List.of(new Token(this), new Token(this), new Token(this), new Token(this)));
+    private int tokens = 4;
 
     public Player(PlayerName playerName, List<Unit> bag, List<Unit> recruitment) {
         this.playerName = playerName;
@@ -50,7 +49,15 @@ public class Player {
     }
 
     public int getRemainingTokens() {
-        return tokens.size();
+        return tokens;
+    }
+
+    public void addToken() {
+        tokens++;
+    }
+
+    public void removeToken() {
+        tokens--;
     }
 
     public void printHand() {

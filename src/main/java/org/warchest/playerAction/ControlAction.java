@@ -41,6 +41,7 @@ public class ControlAction extends PlayerAction {
 
         destination.setControlledBy(player.getPlayerName());
         player.discardUnitFromHand(unit);
+        player.removeToken();
 
         playerTurn.decreaseMovesLeft();
         playerTurn.addPlayerAction(this);
