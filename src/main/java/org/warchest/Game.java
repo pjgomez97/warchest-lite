@@ -84,7 +84,7 @@ public class Game {
                     try {
                         playerAction = getInputFromPlayer(round.getStartingPlayer());
                     } catch (InvalidCommandException e) {
-                        System.out.println("Invalid command syntax. Please try again.");
+                        System.out.println("Invalid command syntax. Please try again");
                     }
                 }
 
@@ -113,7 +113,7 @@ public class Game {
                     try {
                         playerAction = getInputFromPlayer(round.getFinishingPlayer());
                     } catch (InvalidCommandException e) {
-                        System.out.println("Invalid command syntax. Please try again.");
+                        System.out.println("Invalid command syntax. Please try again");
                     }
                 }
 
@@ -233,13 +233,13 @@ public class Game {
                     return new ControlAction(player, ActionType.CONTROL, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]));
                 }
                 case "MOVE" -> {
-                    return new MoveAction(player, ActionType.MOVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[1]), board.getSquareFromPlayerInput(tokens[2]));
+                    return new MoveAction(player, ActionType.MOVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]), board.getSquareFromPlayerInput(tokens[3]));
                 }
                 case "RECRUIT" -> {
                     return new RecruitAction(player, ActionType.RECRUIT, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])));
                 }
                 case "ATTACK" -> {
-                    return new AttackAction(player, ActionType.ATTACK, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[1]), board.getSquareFromPlayerInput(tokens[2]));
+                    return new AttackAction(player, ActionType.ATTACK, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]), board.getSquareFromPlayerInput(tokens[3]));
                 }
                 case "INITIATIVE" -> {
                     return new InitiativeAction(player, ActionType.INITIATIVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])));
