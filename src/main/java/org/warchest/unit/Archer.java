@@ -29,8 +29,10 @@ public class Archer implements Unit, StandardUnit {
 
     @Override
     public boolean canAttack(Square origin, Square target) {
-        return  Math.abs(origin.getPosition().row() - target.getPosition().row()) <= 2 &&
-                Math.abs(origin.getPosition().column() - target.getPosition().column()) <= 2;
+        int rowDistance = origin.getPosition().rowDistanceTo(target.getPosition());
+        int columnDistance = origin.getPosition().columnDistanceTo(target.getPosition());
+
+        return  (rowDistance <= 2 && columnDistance == 0) || (rowDistance == 0 && columnDistance <= 2) || (rowDistance <= 2 && columnDistance == rowDistance);
     }
 
     @Override
@@ -40,8 +42,7 @@ public class Archer implements Unit, StandardUnit {
 
     @Override
     public boolean canMove(Square origin, Square target) {
-        return  Math.abs(origin.getPosition().row() - target.getPosition().row()) == 1 && Math.abs(origin.getPosition().column() - target.getPosition().column()) == 0 ||
-                Math.abs(origin.getPosition().row() - target.getPosition().row()) == 0 && Math.abs(origin.getPosition().column() - target.getPosition().column()) == 1;
+        return origin.getPosition().isNextOrthogonallyTo(target.getPosition());
     }
 
     @Override

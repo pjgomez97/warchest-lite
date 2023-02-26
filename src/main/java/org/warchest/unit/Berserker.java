@@ -30,8 +30,7 @@ public class Berserker implements Unit, StandardUnit {
 
     @Override
     public boolean canAttack(Square origin, Square target) {
-        return  Math.abs(origin.getPosition().row() - target.getPosition().row()) <= 1 &&
-                Math.abs(origin.getPosition().column() - target.getPosition().column()) <= 1;
+        return origin.getPosition().isNextTo(target.getPosition());
     }
 
     @Override
@@ -46,8 +45,7 @@ public class Berserker implements Unit, StandardUnit {
 
     @Override
     public boolean canMove(Square origin, Square target) {
-        return  Math.abs(origin.getPosition().row() - target.getPosition().row()) == 1 && Math.abs(origin.getPosition().column() - target.getPosition().column()) == 0 ||
-                Math.abs(origin.getPosition().row() - target.getPosition().row()) == 0 && Math.abs(origin.getPosition().column() - target.getPosition().column()) == 1;
+        return origin.getPosition().isNextOrthogonallyTo(target.getPosition());
     }
 
     @Override
