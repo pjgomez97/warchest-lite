@@ -20,6 +20,7 @@ import org.warchest.unit.Unit;
 import org.warchest.unit.UnitType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -230,7 +231,7 @@ public class Game {
 
     private PlayerAction parseAction(String action, PlayerName playerName) throws InvalidCommandException {
         Player player = getPlayerByName(playerName);
-        String[] tokens = action.split(" ");
+        String[] tokens = Arrays.stream(action.split(" ")).map(String::trim).toArray(String[]::new);
         try {
             switch (tokens[0]) {
                 case "PLACE" -> {
