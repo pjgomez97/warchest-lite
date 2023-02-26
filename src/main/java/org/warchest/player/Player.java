@@ -104,7 +104,7 @@ public class Player {
     public void initializeHand() {
         Random random = new Random();
 
-        while (hand.size() < 3) {
+        while (hand.size() < 3 && !hasEmptyBag()) {
             hand.add(bag.remove(random.nextInt(bag.size())));
         }
     }
