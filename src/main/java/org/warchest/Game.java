@@ -64,6 +64,7 @@ public class Game {
     public void play() {
         System.out.println("Game start");
 
+        game:
         while (true) {
             round = new Round(round);
 
@@ -96,8 +97,8 @@ public class Game {
 
                 if (playerAction.getActionType().equals(ActionType.ATTACK) || playerAction.getActionType().equals(ActionType.CONTROL)) {
                     if (hasPlayerWon(round.getStartingPlayer())) {
-                        System.out.println("Player " + round.getStartingPlayer() + " has won the game");
-                        break;
+                        System.out.println("\nPlayer " + round.getStartingPlayer() + " has won the game");
+                        break game;
                     }
                 }
             }
@@ -125,8 +126,8 @@ public class Game {
 
                 if (playerAction.getActionType().equals(ActionType.ATTACK) || playerAction.getActionType().equals(ActionType.CONTROL)) {
                     if (hasPlayerWon(round.getFinishingPlayer())) {
-                        System.out.println("Player " + round.getFinishingPlayer() + " has won the game");
-                        break;
+                        System.out.println("\nPlayer " + round.getFinishingPlayer() + " has won the game");
+                        break game;
                     }
                 }
             }
@@ -242,7 +243,7 @@ public class Game {
                 }
                 case "MOVE" -> {
                     Square originSquare = board.getSquareFromPlayerInput(tokens[1]);
-                    Unit handUnit = originSquare.getOccupiedBy() == null ? null :  player.getUnitFromHandByType(((Unit) originSquare.getOccupiedBy()).getType());
+                    Unit handUnit = originSquare.getOccupiedBy() == null ? null : player.getUnitFromHandByType(((Unit) originSquare.getOccupiedBy()).getType());
                     return new MoveAction(player, ActionType.MOVE, handUnit, originSquare, board.getSquareFromPlayerInput(tokens[2]));
                 }
                 case "RECRUIT" -> {
@@ -253,7 +254,7 @@ public class Game {
                 }
                 case "ATTACK" -> {
                     Square originSquare = board.getSquareFromPlayerInput(tokens[1]);
-                    Unit handUnit = originSquare.getOccupiedBy() == null ? null :  player.getUnitFromHandByType(((Unit) originSquare.getOccupiedBy()).getType());
+                    Unit handUnit = originSquare.getOccupiedBy() == null ? null : player.getUnitFromHandByType(((Unit) originSquare.getOccupiedBy()).getType());
                     return new AttackAction(player, ActionType.ATTACK, handUnit, originSquare, board.getSquareFromPlayerInput(tokens[2]));
                 }
                 case "INITIATIVE" -> {
