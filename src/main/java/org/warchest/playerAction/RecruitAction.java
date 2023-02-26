@@ -23,7 +23,7 @@ public class RecruitAction extends PlayerAction {
     @Override
     public void perform(Turn playerTurn, Board board) {
         if (unit == null) {
-            System.out.println("Error. There are no units of the requested type in your hand");
+            System.out.println("There are no units of the requested type or Royal in your hand");
             return;
         }
 
