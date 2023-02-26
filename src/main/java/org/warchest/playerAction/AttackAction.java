@@ -6,6 +6,9 @@ import org.warchest.player.Player;
 import org.warchest.round.Turn;
 import org.warchest.unit.StandardUnit;
 import org.warchest.unit.Unit;
+import org.warchest.unit.UnitType;
+
+import java.util.List;
 
 public class AttackAction extends PlayerAction {
 
@@ -46,6 +49,15 @@ public class AttackAction extends PlayerAction {
         if (!boardUnit.canAttack(origin, destination)) {
             System.out.println("This unit cannot attack the destination square");
             return;
+        }
+
+        if (((Unit) boardUnit).getType() == UnitType.LANCER) {
+            List<PlayerAction> playerActions = playerTurn.getPlayerActions();
+
+            if (playerActions.size() == 0 || playerActions.get(playerActions.size() - 1).getActionType() != ActionType.MOVE) {
+                System.out.println("Lancer units need to move first in order to attack");
+                return;
+            }
         }
 
         destination.setOccupiedBy(null);
