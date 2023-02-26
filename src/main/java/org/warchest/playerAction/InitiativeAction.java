@@ -18,6 +18,11 @@ public class InitiativeAction extends PlayerAction {
             return;
         }
 
+        if (playerTurn.getPlayerActions().stream().anyMatch(playerAction -> playerAction.getActionType().equals(ActionType.INITIATIVE))) {
+            System.out.println("You have already requested initiative during this round");
+            return;
+        }
+
         player.discardUnitFromHand(unit);
         playerTurn.decreaseMovesLeft();
         playerTurn.addPlayerAction(this);
