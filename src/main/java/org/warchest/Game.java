@@ -117,10 +117,10 @@ public class Game {
                     }
                 }
 
-                playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()), board);
+                playerAction.perform(round.getPlayerTurnByName(round.getFinishingPlayer()), board);
 
                 if (playerAction.getActionType().equals(ActionType.ATTACK) || playerAction.getActionType().equals(ActionType.CONTROL)) {
-                    if (hasPlayerWon(round.getFinishingPlayer(), round.getStartingPlayer())) {
+                    if (hasPlayerWon(round.getFinishingPlayer(), round.getFinishingPlayer())) {
                         System.out.println("Player " + round.getFinishingPlayer() + " has won the game");
                         break;
                     }
