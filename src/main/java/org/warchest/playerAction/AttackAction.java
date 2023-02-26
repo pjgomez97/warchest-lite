@@ -24,15 +24,15 @@ public class AttackAction extends PlayerAction {
 
     @Override
     public void perform(Turn playerTurn, Board board) {
-        if (unit == null) {
-            System.out.println("There are no units of the requested type in your hand");
-            return;
-        }
-
         StandardUnit boardUnit = origin.getOccupiedBy();
 
         if (boardUnit == null) {
             System.out.println("There are no units on the origin square");
+            return;
+        }
+
+        if (unit == null) {
+            System.out.println("There are no units of the requested type in your hand");
             return;
         }
 

@@ -1,6 +1,7 @@
 package org.warchest;
 
 import org.warchest.board.Board;
+import org.warchest.board.Square;
 import org.warchest.exception.InvalidCommandException;
 import org.warchest.player.Player;
 import org.warchest.player.PlayerName;
@@ -87,6 +88,8 @@ public class Game {
                         System.out.println("Invalid command. Please try again");
                     }
                 }
+
+                System.out.println();
 
                 playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()), board);
 
@@ -218,8 +221,7 @@ public class Game {
         System.out.println("PLACE <UNIT> <SQUARE>");
         System.out.println("CONTROL <UNIT> <SQUARE>");
         System.out.println("MOVE <ORIGIN> <DESTINATION>");
-        System.out.println("RECRUIT <UNIT>");
-        System.out.println("RECRUIT ROYAL <UNIT>");
+        System.out.println("RECRUIT [ROYAL] <UNIT>");
         System.out.println("ATTACK <ORIGIN> <DESTINATION>");
         System.out.println("INITIATIVE <UNIT>");
         System.out.println("EXIT");
@@ -238,7 +240,9 @@ public class Game {
                     return new ControlAction(player, ActionType.CONTROL, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]), getAdversary(player));
                 }
                 case "MOVE" -> {
-                    return new MoveAction(player, ActionType.MOVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]), board.getSquareFromPlayerInput(tokens[3]));
+                    Square originSquare = board.getSquareFromPlayerInput(tokens[1]);
+                    Unit handUnit = originSquare.getOccupiedBy() == null ? null :  player.getUnitFromHandByType(((Unit) originSquare.getOccupiedBy()).getType());
+                    return new MoveAction(player, ActionType.MOVE, handUnit, originSquare, board.getSquareFromPlayerInput(tokens[2]));
                 }
                 case "RECRUIT" -> {
                     if (tokens[1].equals("ROYAL")) {
@@ -247,7 +251,9 @@ public class Game {
                     return new RecruitAction(player, ActionType.RECRUIT, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])));
                 }
                 case "ATTACK" -> {
-                    return new AttackAction(player, ActionType.ATTACK, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]), board.getSquareFromPlayerInput(tokens[3]));
+                    Square originSquare = board.getSquareFromPlayerInput(tokens[1]);
+                    Unit handUnit = originSquare.getOccupiedBy() == null ? null :  player.getUnitFromHandByType(((Unit) originSquare.getOccupiedBy()).getType());
+                    return new AttackAction(player, ActionType.ATTACK, handUnit, originSquare, board.getSquareFromPlayerInput(tokens[2]));
                 }
                 case "INITIATIVE" -> {
                     return new InitiativeAction(player, ActionType.INITIATIVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])));
