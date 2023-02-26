@@ -32,7 +32,7 @@ public class Crossbowman implements Unit, StandardUnit {
         int rowDistance = origin.getPosition().rowDistanceTo(target.getPosition());
         int columnDistance = origin.getPosition().columnDistanceTo(target.getPosition());
 
-        return  (rowDistance <= 2 && columnDistance == 0) || (rowDistance == 0 && columnDistance <= 2);
+        return (rowDistance <= 2 && columnDistance == 0) || (rowDistance == 0 && columnDistance <= 2);
     }
 
     @Override

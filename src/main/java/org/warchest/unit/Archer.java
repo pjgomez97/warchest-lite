@@ -32,7 +32,7 @@ public class Archer implements Unit, StandardUnit {
         int rowDistance = origin.getPosition().rowDistanceTo(target.getPosition());
         int columnDistance = origin.getPosition().columnDistanceTo(target.getPosition());
 
-        return  (rowDistance <= 2 && columnDistance == 0) || (rowDistance == 0 && columnDistance <= 2) || (rowDistance <= 2 && columnDistance == rowDistance);
+        return (rowDistance <= 2 && columnDistance == 0) || (rowDistance == 0 && columnDistance <= 2) || (rowDistance <= 2 && columnDistance == rowDistance);
     }
 
     @Override
