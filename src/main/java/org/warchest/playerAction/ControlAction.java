@@ -11,9 +11,12 @@ public class ControlAction extends PlayerAction {
 
     private final Square destination;
 
-    public ControlAction(Player player, ActionType actionType, Unit unit, Square destination) {
+    private final Player adversary;
+
+    public ControlAction(Player player, ActionType actionType, Unit unit, Square destination, Player adversary) {
         super(player, actionType, unit);
         this.destination = destination;
+        this.adversary = adversary;
     }
 
     @Override
@@ -46,6 +49,10 @@ public class ControlAction extends PlayerAction {
         if (destination.getControlledBy() == player.getPlayerName()) {
             System.out.println("You already control that square");
             return;
+        }
+
+        if (destination.getControlledBy() != null) {
+            adversary.addToken();
         }
 
         destination.setControlledBy(player.getPlayerName());

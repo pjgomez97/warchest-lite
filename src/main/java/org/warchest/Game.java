@@ -91,7 +91,7 @@ public class Game {
                 playerAction.perform(round.getPlayerTurnByName(round.getStartingPlayer()), board);
 
                 if (playerAction.getActionType().equals(ActionType.ATTACK) || playerAction.getActionType().equals(ActionType.CONTROL)) {
-                    if (hasPlayerWon(round.getStartingPlayer(), round.getFinishingPlayer())) {
+                    if (hasPlayerWon(round.getStartingPlayer())) {
                         System.out.println("Player " + round.getStartingPlayer() + " has won the game");
                         break;
                     }
@@ -120,7 +120,7 @@ public class Game {
                 playerAction.perform(round.getPlayerTurnByName(round.getFinishingPlayer()), board);
 
                 if (playerAction.getActionType().equals(ActionType.ATTACK) || playerAction.getActionType().equals(ActionType.CONTROL)) {
-                    if (hasPlayerWon(round.getFinishingPlayer(), round.getFinishingPlayer())) {
+                    if (hasPlayerWon(round.getFinishingPlayer())) {
                         System.out.println("Player " + round.getFinishingPlayer() + " has won the game");
                         break;
                     }
@@ -179,12 +179,14 @@ public class Game {
         player.printDiscard();
     }
 
-    private boolean hasPlayerWon(PlayerName playerName, PlayerName adversaryName) {
-        if(getPlayerByName(playerName).getRemainingTokens() == 0) {
+    private boolean hasPlayerWon(PlayerName playerName) {
+        Player player = getPlayerByName(playerName);
+
+        if (player.getRemainingTokens() == 0) {
             return true;
         }
 
-        Player adversary = getPlayerByName(adversaryName);
+        Player adversary = getAdversary(player);
 
         return adversary.hasNoUnitsToRecruit() && adversary.hasEmptyBag() && adversary.hasEmptyHand() && board.unitsPresentForPlayer(adversary) == 0;
     }
@@ -231,7 +233,7 @@ public class Game {
                     return new PlaceAction(player, ActionType.PLACE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]));
                 }
                 case "CONTROL" -> {
-                    return new ControlAction(player, ActionType.CONTROL, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]));
+                    return new ControlAction(player, ActionType.CONTROL, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]), getAdversary(player));
                 }
                 case "MOVE" -> {
                     return new MoveAction(player, ActionType.MOVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]), board.getSquareFromPlayerInput(tokens[3]));
@@ -261,5 +263,9 @@ public class Game {
         } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
             throw new InvalidCommandException("The introduced command is not valid");
         }
+    }
+
+    private Player getAdversary(Player player) {
+        return players[0] == player ? players[1] : players[0];
     }
 }
