@@ -21,6 +21,11 @@ public class MoveAction extends PlayerAction {
 
     @Override
     public void perform(Turn playerTurn, Board board) {
+        if (origin == destination) {
+            System.out.println("The origin and destination squares must be different");
+            return;
+        }
+
         StandardUnit boardUnit = origin.getOccupiedBy();
 
         if (boardUnit == null) {
