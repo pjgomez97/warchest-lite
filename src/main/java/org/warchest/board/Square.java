@@ -21,9 +21,11 @@ public class Square {
         switch (s) {
             case "C":
                 square.controlledBy = PlayerName.CROW;
+                square.isZone = true;
                 break;
             case "W":
                 square.controlledBy = PlayerName.WOLF;
+                square.isZone = true;
                 break;
             case "@":
                 square.isZone = true;
