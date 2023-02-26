@@ -15,18 +15,18 @@ public class Round {
 
     private PlayerName secondPlayerName;
 
-    public Round(Round round) {
+    public Round(Round previousRound) {
         turnMap = new HashMap<>();
 
-        if (round == null) {
+        if (previousRound == null) {
             randomTurns();
         } else {
-            if (round.getPlayerTurnByName(round.getFinishingPlayer()).getPlayerActions().stream().anyMatch(playerAction -> playerAction.getActionType() == ActionType.INITIATIVE)) {
-                firstPlayerName = round.getFinishingPlayer();
-                secondPlayerName = round.getStartingPlayer();
-            } else if (round.getPlayerTurnByName(round.getStartingPlayer()).getPlayerActions().stream().anyMatch(playerAction -> playerAction.getActionType() == ActionType.INITIATIVE)) {
-                firstPlayerName = round.getStartingPlayer();
-                secondPlayerName = round.getFinishingPlayer();
+            if (previousRound.getPlayerTurnByName(previousRound.getFinishingPlayer()).getPlayerActions().stream().anyMatch(playerAction -> playerAction.getActionType() == ActionType.INITIATIVE)) {
+                firstPlayerName = previousRound.getFinishingPlayer();
+                secondPlayerName = previousRound.getStartingPlayer();
+            } else if (previousRound.getPlayerTurnByName(previousRound.getStartingPlayer()).getPlayerActions().stream().anyMatch(playerAction -> playerAction.getActionType() == ActionType.INITIATIVE)) {
+                firstPlayerName = previousRound.getStartingPlayer();
+                secondPlayerName = previousRound.getFinishingPlayer();
             } else {
                 randomTurns();
             }
