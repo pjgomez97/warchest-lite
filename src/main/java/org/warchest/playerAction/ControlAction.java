@@ -8,8 +8,11 @@ import org.warchest.unit.Unit;
 
 public class ControlAction extends PlayerAction {
 
-    public ControlAction(Player player, ActionType actionType, Unit unit, Square origin, Square destination) {
-        super(player, actionType, unit, origin, destination);
+    private final Square destination;
+
+    public ControlAction(Player player, ActionType actionType, Unit unit, Square destination) {
+        super(player, actionType, unit);
+        this.destination = destination;
     }
 
     @Override

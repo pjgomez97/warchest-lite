@@ -1,15 +1,14 @@
 package org.warchest.playerAction;
 
 import org.warchest.board.Board;
-import org.warchest.board.Square;
 import org.warchest.player.Player;
 import org.warchest.round.Turn;
 import org.warchest.unit.Unit;
 
 public class RecruitAction extends PlayerAction {
 
-    public RecruitAction(Player player, ActionType actionType, Unit unit, Square origin, Square destination) {
-        super(player, actionType, unit, origin, destination);
+    public RecruitAction(Player player, ActionType actionType, Unit unit) {
+        super(player, actionType, unit);
     }
 
     @Override

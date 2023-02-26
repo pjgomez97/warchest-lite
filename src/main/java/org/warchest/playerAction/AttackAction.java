@@ -8,8 +8,14 @@ import org.warchest.unit.Unit;
 
 public class AttackAction extends PlayerAction {
 
+    private final Square origin;
+
+    private final Square destination;
+
     public AttackAction(Player player, ActionType actionType, Unit unit, Square origin, Square destination) {
-        super(player, actionType, unit, origin, destination);
+        super(player, actionType, unit);
+        this.origin = origin;
+        this.destination = destination;
     }
 
     @Override

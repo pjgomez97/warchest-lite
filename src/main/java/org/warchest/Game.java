@@ -227,22 +227,22 @@ public class Game {
         try {
             switch (tokens[0]) {
                 case "PLACE" -> {
-                    return new PlaceAction(player, ActionType.PLACE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), null, board.getSquareFromPlayerInput(tokens[2]));
+                    return new PlaceAction(player, ActionType.PLACE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]));
                 }
                 case "CONTROL" -> {
-                    return new ControlAction(player, ActionType.CONTROL, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), null, board.getSquareFromPlayerInput(tokens[2]));
+                    return new ControlAction(player, ActionType.CONTROL, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]));
                 }
                 case "MOVE" -> {
-                    return new MoveAction(player, ActionType.MOVE, null, board.getSquareFromPlayerInput(tokens[1]), board.getSquareFromPlayerInput(tokens[2]));
+                    return new MoveAction(player, ActionType.MOVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[1]), board.getSquareFromPlayerInput(tokens[2]));
                 }
                 case "RECRUIT" -> {
-                    return new RecruitAction(player, ActionType.RECRUIT, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), null, null);
+                    return new RecruitAction(player, ActionType.RECRUIT, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])));
                 }
                 case "ATTACK" -> {
-                    return new AttackAction(player, ActionType.ATTACK, null, board.getSquareFromPlayerInput(tokens[1]), board.getSquareFromPlayerInput(tokens[2]));
+                    return new AttackAction(player, ActionType.ATTACK, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[1]), board.getSquareFromPlayerInput(tokens[2]));
                 }
                 case "INITIATIVE" -> {
-                    return new InitiativeAction(player, ActionType.INITIATIVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), null, null);
+                    return new InitiativeAction(player, ActionType.INITIATIVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])));
                 }
                 case "EXIT" -> {
                     System.out.println("Exiting the game...");

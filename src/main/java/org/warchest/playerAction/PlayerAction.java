@@ -1,7 +1,6 @@
 package org.warchest.playerAction;
 
 import org.warchest.board.Board;
-import org.warchest.board.Square;
 import org.warchest.player.Player;
 import org.warchest.round.Turn;
 import org.warchest.unit.Unit;
@@ -14,16 +13,10 @@ public abstract class PlayerAction {
 
     protected final Unit unit;
 
-    protected final Square origin;
-
-    protected final Square destination;
-
-    protected PlayerAction(Player player, ActionType actionType, Unit unit, Square origin, Square destination) {
+    protected PlayerAction(Player player, ActionType actionType, Unit unit) {
         this.player = player;
         this.actionType = actionType;
         this.unit = unit;
-        this.origin = origin;
-        this.destination = destination;
     }
 
     public ActionType getActionType() {
