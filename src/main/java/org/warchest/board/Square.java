@@ -19,12 +19,16 @@ public class Square {
         Square square = new Square();
 
         switch (s) {
-            case "C": square.controlledBy = PlayerName.CROW;
-            break;
-            case "W": square.controlledBy = PlayerName.WOLF;
-            break;
-            case "@": square.isZone = true;
-            default: break;
+            case "C":
+                square.controlledBy = PlayerName.CROW;
+                break;
+            case "W":
+                square.controlledBy = PlayerName.WOLF;
+                break;
+            case "@":
+                square.isZone = true;
+            default:
+                break;
         }
 
         square.setPosition(position);
@@ -62,11 +66,7 @@ public class Square {
 
     @Override
     public String toString() {
-        if (controlledBy == PlayerName.CROW) {
-            return Console.printRed("C");
-        } else if (controlledBy == PlayerName.WOLF) {
-            return Console.printBlue("W");
-        } else if (occupiedBy != null) {
+        if (occupiedBy != null) {
             Unit unit = (Unit) occupiedBy;
             String unitName = unit.getType().toString().substring(0, 2).toUpperCase();
             if (!isZone) {
@@ -74,6 +74,10 @@ public class Square {
             } else {
                 return unit.getOwner().getPlayerName() == PlayerName.CROW ? Console.printYellow(unitName) : Console.printPurple(unitName);
             }
+        } else if (controlledBy == PlayerName.CROW) {
+            return Console.printRed("C");
+        } else if (controlledBy == PlayerName.WOLF) {
+            return Console.printBlue("W");
         } else if (isZone) {
             return Console.printGreen("@");
         } else {
