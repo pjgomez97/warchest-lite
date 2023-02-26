@@ -54,7 +54,7 @@ public class AttackAction extends PlayerAction {
         if (((Unit) boardUnit).getType() == UnitType.LANCER) {
             List<PlayerAction> playerActions = playerTurn.getPlayerActions();
 
-            if (playerActions.size() == 0 || playerActions.get(playerActions.size() - 1).getActionType() != ActionType.MOVE) {
+            if (playerActions.isEmpty() || playerActions.get(playerActions.size() - 1).getActionType() != ActionType.MOVE) {
                 System.out.println("Lancer units need to move first in order to attack");
                 return;
             }

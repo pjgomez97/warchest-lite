@@ -35,7 +35,7 @@ public class Berserker implements Unit, StandardUnit {
 
     @Override
     public boolean hasFreeAttack(List<PlayerAction> playerActions) {
-        if (playerActions.size() == 0) {
+        if (playerActions.isEmpty()) {
             return false;
         }
 

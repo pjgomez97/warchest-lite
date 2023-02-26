@@ -45,7 +45,7 @@ public class Swordsman implements Unit, StandardUnit {
 
     @Override
     public boolean hasFreeMove(List<PlayerAction> playerActions) {
-        if (playerActions.size() == 0) {
+        if (playerActions.isEmpty()) {
             return false;
         }
 
