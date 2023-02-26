@@ -46,6 +46,11 @@ public class AttackAction extends PlayerAction {
             return;
         }
 
+        if (((Unit) origin.getOccupiedBy()).getOwner() == ((Unit) destination.getOccupiedBy()).getOwner()) {
+            System.out.println("You cannot attack your own units");
+            return;
+        }
+
         if (!boardUnit.canAttack(origin, destination)) {
             System.out.println("This unit cannot attack the destination square");
             return;
