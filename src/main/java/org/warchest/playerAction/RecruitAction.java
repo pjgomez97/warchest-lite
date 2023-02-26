@@ -4,11 +4,20 @@ import org.warchest.board.Board;
 import org.warchest.player.Player;
 import org.warchest.round.Turn;
 import org.warchest.unit.Unit;
+import org.warchest.unit.UnitType;
 
 public class RecruitAction extends PlayerAction {
 
+    private final UnitType unitType;
+
     public RecruitAction(Player player, ActionType actionType, Unit unit) {
         super(player, actionType, unit);
+        this.unitType = null;
+    }
+
+    public RecruitAction(Player player, ActionType actionType, Unit unit, UnitType unitType) {
+        super(player, actionType, unit);
+        this.unitType = unitType;
     }
 
     @Override
@@ -18,7 +27,7 @@ public class RecruitAction extends PlayerAction {
             return;
         }
 
-        Unit recruitmentUnit = player.getUnitFromRecruitmentByType(unit.getType());
+        Unit recruitmentUnit = unitType == null ? player.getUnitFromRecruitmentByType(unit.getType()) : player.getUnitFromRecruitmentByType(unitType);
 
         if (recruitmentUnit == null) {
             System.out.printf("There are no units of type %s left in the recruitment section\n", unit.getType());

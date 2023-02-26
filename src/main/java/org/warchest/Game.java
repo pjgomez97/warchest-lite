@@ -215,6 +215,7 @@ public class Game {
         System.out.println("CONTROL <UNIT> <SQUARE>");
         System.out.println("MOVE <ORIGIN> <DESTINATION>");
         System.out.println("RECRUIT <UNIT>");
+        System.out.println("RECRUIT ROYAL <UNIT>");
         System.out.println("ATTACK <ORIGIN> <DESTINATION>");
         System.out.println("INITIATIVE <UNIT>");
         System.out.println("EXIT");
@@ -236,6 +237,9 @@ public class Game {
                     return new MoveAction(player, ActionType.MOVE, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])), board.getSquareFromPlayerInput(tokens[2]), board.getSquareFromPlayerInput(tokens[3]));
                 }
                 case "RECRUIT" -> {
+                    if (tokens[1].equals("ROYAL")) {
+                        return new RecruitAction(player, ActionType.RECRUIT, player.getUnitFromHandByType(UnitType.ROYAL), UnitType.valueOf(tokens[2]));
+                    }
                     return new RecruitAction(player, ActionType.RECRUIT, player.getUnitFromHandByType(UnitType.valueOf(tokens[1])));
                 }
                 case "ATTACK" -> {
