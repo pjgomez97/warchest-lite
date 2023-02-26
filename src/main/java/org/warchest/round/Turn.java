@@ -11,10 +11,11 @@ public class Turn {
 
     private final List<PlayerAction> playerActions;
 
-    private int movesLeft = MAX_MOVES_PER_TURN;
+    private int movesLeft;
 
     public Turn() {
-        this.playerActions = new ArrayList<>();
+        playerActions = new ArrayList<>();
+        movesLeft = MAX_MOVES_PER_TURN;
     }
 
     public List<PlayerAction> getPlayerActions() {

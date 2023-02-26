@@ -50,6 +50,7 @@ public class Swordsman implements Unit, StandardUnit {
         if (playerActions.size() == 0) {
             return false;
         }
+
         PlayerAction lastAction = playerActions.get(playerActions.size() - 1);
 
         return lastAction.getActionType().equals(ActionType.ATTACK) && lastAction.getUnit() == this;

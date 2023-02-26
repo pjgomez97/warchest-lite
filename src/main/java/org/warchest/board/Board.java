@@ -15,12 +15,12 @@ public class Board {
     private final Square[][] board;
 
     public Board(String[][] board) {
-        this.board = new Square[board.length][board.length];
+        this.board = new Square[board.length][board[0].length];
         initializeBoardFromStringBoard(board);
     }
 
     public void printBoard() {
-        System.out.print("\n---- Current board state ----\n\n");
+        System.out.println("\n---- Current board state ----\n");
         System.out.println("   " + COLUMN_HEADERS);
         System.out.println("   -----------------");
         for (int row = 0; row < board.length; row++) {
@@ -76,6 +76,7 @@ public class Board {
 
     public int unitsPresentForPlayer(Player player) {
         int count = 0;
+
         for (Square[] squares : board) {
             for (Square square : squares) {
                 if (square.getOccupiedBy() != null && ((Unit) square.getOccupiedBy()).getOwner() == player) {
@@ -83,6 +84,7 @@ public class Board {
                 }
             }
         }
+
         return count;
     }
 

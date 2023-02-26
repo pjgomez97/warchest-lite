@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 public class Player {
 
+    private static final int MAX_TOKENS_PER_PLAYER = 4;
+
     private final PlayerName playerName;
 
     private final List<Unit> bag;
@@ -21,7 +23,7 @@ public class Player {
 
     private final List<Unit> discard;
 
-    private int tokens = 4;
+    private int tokens;
 
     public Player(PlayerName playerName, List<Unit> bag, List<Unit> recruitment) {
         this.playerName = playerName;
@@ -29,6 +31,7 @@ public class Player {
         this.recruitment = recruitment;
         this.hand = new ArrayList<>();
         this.discard = new ArrayList<>();
+        this.tokens = MAX_TOKENS_PER_PLAYER;
         setOwnership();
     }
 
@@ -92,13 +95,8 @@ public class Player {
         System.out.println();
     }
 
-    public void setOwnership() {
-        for (Unit unit: bag) {
-            unit.setOwner(this);
-        }
-        for (Unit unit: recruitment) {
-            unit.setOwner(this);
-        }
+    public void printControlTokens() {
+        System.out.print("Control tokens: " + tokens);
     }
 
     public void initializeHand() {
@@ -106,6 +104,16 @@ public class Player {
 
         while (hand.size() < 3 && !hasEmptyBag()) {
             hand.add(bag.remove(random.nextInt(bag.size())));
+        }
+    }
+
+    private void setOwnership() {
+        for (Unit unit: bag) {
+            unit.setOwner(this);
+        }
+
+        for (Unit unit: recruitment) {
+            unit.setOwner(this);
         }
     }
 

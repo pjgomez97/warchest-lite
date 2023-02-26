@@ -65,7 +65,7 @@ public class Game {
         while (true) {
             round = new Round(round);
 
-            for (Player player: players) {
+            for (Player player : players) {
                 player.initializeHand();
             }
 
@@ -84,7 +84,7 @@ public class Game {
                     try {
                         playerAction = getInputFromPlayer(round.getStartingPlayer());
                     } catch (InvalidCommandException e) {
-                        System.out.println("Invalid command syntax. Please try again");
+                        System.out.println("Invalid command. Please try again");
                     }
                 }
 
@@ -113,7 +113,7 @@ public class Game {
                     try {
                         playerAction = getInputFromPlayer(round.getFinishingPlayer());
                     } catch (InvalidCommandException e) {
-                        System.out.println("Invalid command syntax. Please try again");
+                        System.out.println("Invalid command. Please try again");
                     }
                 }
 
@@ -154,7 +154,7 @@ public class Game {
         Player firstPlayer = new Player(PlayerName.CROW, firstPlayerBag, firstPlayerRecruitment);
         Player secondPlayer = new Player(PlayerName.WOLF, secondPlayerBag, secondPlayerRecruitment);
 
-        players = new Player[] {firstPlayer, secondPlayer};
+        players = new Player[]{firstPlayer, secondPlayer};
     }
 
     private void initializePlayerUnits(List<Unit> playerBag, List<Unit> playerRecruitment, int position) {
@@ -165,7 +165,7 @@ public class Game {
     }
 
     private void printSeparator() {
-        System.out.print("\n\n-----------------------------------------------------\n\n");
+        System.out.println("\n-----------------------------------------------------\n");
     }
 
     public void printPlayerCurrentStatus(PlayerName playerName) {
@@ -177,6 +177,8 @@ public class Game {
         player.printHand();
         player.printRecruitment();
         player.printDiscard();
+        System.out.println();
+        player.printControlTokens();
     }
 
     private boolean hasPlayerWon(PlayerName playerName) {
@@ -192,7 +194,7 @@ public class Game {
     }
 
     private void showPlayerActions(int movesLeft) {
-        System.out.printf("\nInput the desired action. You have %d moves left.\nEnter HELP for examples on the possible actions. \n\n", movesLeft);
+        System.out.printf("\n\nInput the desired action. You have %d moves left.\nEnter HELP for examples on the possible actions. \n\n", movesLeft);
     }
 
     private Player getPlayerByName(PlayerName playerName) {

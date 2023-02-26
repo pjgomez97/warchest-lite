@@ -39,6 +39,7 @@ public class Cavalry implements Unit, StandardUnit {
         if (playerActions.size() == 0) {
             return false;
         }
+
         PlayerAction lastAction = playerActions.get(playerActions.size() - 1);
 
         return lastAction.getActionType().equals(ActionType.MOVE) && lastAction.getUnit() == this;

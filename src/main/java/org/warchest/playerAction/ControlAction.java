@@ -26,7 +26,7 @@ public class ControlAction extends PlayerAction {
             return;
         }
 
-        if (unit.getType().equals(UnitType.ROYAL)) {
+        if (unit.getType() == UnitType.ROYAL) {
             System.out.println("Royal units cannot be used to control a zone");
             return;
         }
@@ -41,7 +41,7 @@ public class ControlAction extends PlayerAction {
             return;
         }
 
-        if (((Unit)destination.getOccupiedBy()).getOwner() != player) {
+        if (((Unit) destination.getOccupiedBy()).getOwner() != player) {
             System.out.println("The unit present on that square belongs to a different player");
             return;
         }
@@ -56,10 +56,13 @@ public class ControlAction extends PlayerAction {
         }
 
         destination.setControlledBy(player.getPlayerName());
+
         player.discardUnitFromHand(unit);
+
         player.removeToken();
 
         playerTurn.decreaseMovesLeft();
+
         playerTurn.addPlayerAction(this);
     }
 }

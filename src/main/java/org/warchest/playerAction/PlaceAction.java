@@ -24,7 +24,7 @@ public class PlaceAction extends PlayerAction {
             return;
         }
 
-        if (unit.getType().equals(UnitType.ROYAL)) {
+        if (unit.getType() == UnitType.ROYAL) {
             System.out.println("Error. Royal units cannot be placed in the board");
             return;
         }
@@ -39,6 +39,7 @@ public class PlaceAction extends PlayerAction {
         player.removeUnitFromHand(unit);
 
         playerTurn.decreaseMovesLeft();
+
         playerTurn.addPlayerAction(this);
     }
 }

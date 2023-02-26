@@ -17,6 +17,7 @@ public class Round {
 
     public Round(Round round) {
         turnMap = new HashMap<>();
+
         if (round == null) {
             randomTurns();
         } else {
@@ -30,6 +31,7 @@ public class Round {
                 randomTurns();
             }
         }
+
         turnMap.put(firstPlayerName, new Turn());
         turnMap.put(secondPlayerName, new Turn());
     }

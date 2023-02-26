@@ -33,7 +33,7 @@ public class MoveAction extends PlayerAction {
             return;
         }
 
-        if (!((Unit)boardUnit).getType().equals(unit.getType())) {
+        if (((Unit) boardUnit).getType() != unit.getType()) {
             System.out.println("The square unit is not of type " + unit.getType());
             return;
         }

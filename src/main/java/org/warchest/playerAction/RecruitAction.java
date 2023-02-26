@@ -35,7 +35,9 @@ public class RecruitAction extends PlayerAction {
         }
 
         player.recruitUnit(unit, recruitmentUnit);
+
         playerTurn.decreaseMovesLeft();
+
         playerTurn.addPlayerAction(this);
     }
 }
