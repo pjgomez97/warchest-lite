@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class Player {
 
-    private static final int MAX_TOKENS_PER_PLAYER = 4;
+    public static final int MAX_TOKENS_PER_PLAYER = 4;
 
     private final PlayerName playerName;
 
