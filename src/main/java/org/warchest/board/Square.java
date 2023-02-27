@@ -33,7 +33,7 @@ public class Square {
                 break;
         }
 
-        square.setPosition(position);
+        square.position = position;
 
         return square;
     }
