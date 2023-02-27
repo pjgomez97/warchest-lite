@@ -64,7 +64,7 @@ public class Board {
                 continue;
             }
             for (int column = squareColumn - 1; column <= squareColumn + 1; column++) {
-                if (column < 0 || column >= board[0].length) {
+                if (column < 0 || column >= board[0].length || (row == squareRow && column == squareColumn)) {
                     continue;
                 }
                 adjacentSquares.add(board[row][column]);
