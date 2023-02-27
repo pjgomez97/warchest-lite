@@ -42,10 +42,6 @@ public class Square {
         return position;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
     public boolean isZone() {
         return isZone;
     }
@@ -77,13 +73,13 @@ public class Square {
                 return unit.getOwner().getPlayerName() == PlayerName.CROW ? Console.printYellow(unitName) : Console.printPurple(unitName);
             }
         } else if (controlledBy == PlayerName.CROW) {
-            return Console.printRed("C");
+            return Console.printRed("C ");
         } else if (controlledBy == PlayerName.WOLF) {
-            return Console.printBlue("W");
+            return Console.printBlue("W ");
         } else if (isZone) {
-            return Console.printGreen("@");
+            return Console.printGreen("@ ");
         } else {
-            return "-";
+            return "--";
         }
     }
 }
